@@ -1,0 +1,12 @@
+{% import "bootstrap/wtf.html" as wtf %} {%block content %} {% include
+"header.html" %}
+<div class="container mt-5">
+  <h4 class="text-center" style="font-weight: bold">Get In Touch!</h4>
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      {{ wtf.quick_form(form, novalidate=True, button_map={"submit": "danger"})
+      }}
+    </div>
+  </div>
+</div>
+{% include "footer.html" %} {% endblock %}

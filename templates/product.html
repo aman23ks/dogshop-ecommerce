@@ -1,0 +1,74 @@
+{% import "bootstrap/wtf.html" as wtf %} {%block content %} {% include
+"header.html" %}
+
+<div class="text-center mt-5">
+  <h4 style="font-weight: bold">
+    We Know you'll love him! Look at him he's so adorable.
+  </h4>
+  <div class="row">
+    <div class="col-lg-6" style="padding: 3rem">
+      <img src="{{dog.img_url}}" style="width: 100%" alt="dog-img" />
+    </div>
+    <div class="col-lg-6" style="padding: 3rem">
+      <h4><span style="font-weight: bold"> Name: </span>{{dog.name}}</h4>
+      <h4>
+        <span style="font-weight: bold">Description: </span>{{dog.description}}
+      </h4>
+      <div class="row">
+        <div class="col-lg-6">
+          <h4><span style="font-weight: bold">Age: </span>{{dog.age}} old</h4>
+        </div>
+        <div class="col-lg-6">
+          <h4><span style="font-weight: bold">Breed: </span>{{dog.breed}}</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h4>
+            <span style="font-weight: bold">Medication:</span>
+            {{dog.medication}}
+          </h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h4>
+            <span style="font-weight: bold">Something to motivate you by: </span
+            >{{dog.motivation}}
+          </h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h4><span style="font-weight: bold">Price: </span>${{dog.price}}</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <a href="{{url_for('cart',id=dog.id)}}"
+            ><button class="btn btn-lg btn-danger">Add to Cart</button></a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6" style="padding: 0 3rem">
+    {{ ckeditor.load() }} {{ ckeditor.config(name='comment_text') }} {{
+    wtf.quick_form(form, novalidate=True, button_map={"submit": "danger"}) }}
+  </div>
+  <div class="col-lg-6">
+    <h3>Comments</h3>
+    {% for comment in dog.comments %}
+    <p>{{comment.text|safe}}</p>
+    <p style="font-size: 0.6rem; margin-top: -0.5rem">
+      {{comment.comment_user.name}}
+    </p>
+
+    {% endfor %}
+  </div>
+</div>
+
+{% include "footer.html" %} {% endblock %}

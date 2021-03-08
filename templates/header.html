@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html style="overflow-x: hidden">
+  <head>
+    <meta charset="utf-8" />
+    <title>tindog</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <script
+      src="https://kit.fontawesome.com/761feec98e.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;900&family=Ubuntu&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body style="overflow-x: hidden">
+    <section id="title">
+      <div class="container-fluid" style="padding: 2% 15% 2%">
+        <!-- Nav Bar -->
+
+        <nav class="navbar navbar-expand-lg navbar-dark" style="padding: 0">
+          <a class="navbar-brand" href="{{url_for('home')}}">tindog</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('explore') }} ">
+                  Explore
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }} ">
+                  About Us
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('contact') }}">
+                  Contact Us
+                </a>
+              </li>
+              {% if not current_user.is_authenticated: %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('signin') }}">Signin</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('signup') }}">Signup</a>
+              </li>
+              {% else: %} {% if current_user.id != 1 %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('cart',id=0) }}">Cart</a>
+              </li>
+              {% endif %} {% if current_user.id == 1 %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('add') }}">Add Dog</a>
+              </li>
+              {% endif %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}">Log out</a>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </section>
+  </body>
+</html>

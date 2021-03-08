@@ -1,0 +1,56 @@
+{% import "bootstrap/wtf.html" as wtf %} {%block content %} {% include
+"header.html" %}
+
+<h4 class="text-center mt-5" style="font-weight: bold">Your Shopping Cart!</h4>
+<a href="{{url_for('explore')}}" style="color: black" class="text-center"
+  ><h5>Go back and buy more dogs</h5></a
+>
+<div class="row" style="padding: 0 25rem">
+  {% for dogs in list_of_dogs: %}
+  <div
+    class="row dog-card mt-5"
+    style="
+      border: 1px solid black;
+      border-radius: 2rem;
+      padding: 1rem;
+      box-shadow: 5px 5px 5px 5px grey;
+    "
+  >
+    <div class="col">
+      <img src="{{dogs.img_url}}" style="width: 100%" alt="dog-img" />
+    </div>
+
+    <div class="col">
+      <h5>{{dogs.name}}</h5>
+      <h6>{{dogs.description}}</h6>
+      <div class="row">
+        <div class="col">
+          <h6>{{dogs.age}}</h6>
+        </div>
+        <div class="col">
+          <h6>{{dogs.breed}}</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h6>${{dogs.price}}</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  <div class="col">
+    <div class="row mt-5">
+      <h4>Total Price: ₹{{price}}</h4>
+    </div>
+    <div class="row">
+      <a href="#"
+        ><button id="checkout" class="btn btn-lg btn-danger">
+          Checkout
+        </button></a
+      >
+    </div>
+  </div>
+</div>
+
+{% include "footer.html" %} {% endblock %}
