@@ -10,11 +10,14 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 import smtplib
 import stripe
+import os
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "EVVBAVNVKNVKN"
-app.config["STRIPE_PUBLIC_KEY"] = "pk_test_51IRWiNExRBiBD9IcW2kbeW5koqkTifz4PXi0rKY1IM0nQqxzJtnfyFzJ6KLn7voO4zAcZfaJyV1Mb7DUKJTRdedS00mcb4n2MS"
-app.config["STRIPE_SECRET_KEY"] = "sk_test_51IRWiNExRBiBD9IcsCbJCCWoYDPK6QvKxDlBYNQcfwIUzITNh1xVD1ttFPY8w2klVt1JCHxGRaFMTaVLGmq7X4JI00ulDBn7d4"
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "EVVBAVNVKNVKN")
+app.config["STRIPE_PUBLIC_KEY"] = os.environ.get(
+    "STRIPE_PUBLIC_KEY", "pk_test_51IRWiNExRBiBD9IcW2kbeW5koqkTifz4PXi0rKY1IM0nQqxzJtnfyFzJ6KLn7voO4zAcZfaJyV1Mb7DUKJTRdedS00mcb4n2MS")
+app.config["STRIPE_SECRET_KEY"] = os.environ.get(
+    "STRIPE_SECRET_KEY", "sk_test_51IRWiNExRBiBD9IcsCbJCCWoYDPK6QvKxDlBYNQcfwIUzITNh1xVD1ttFPY8w2klVt1JCHxGRaFMTaVLGmq7X4JI00ulDBn7d4")
 stripe.api_key = app.config["STRIPE_SECRET_KEY"]
 
 Bootstrap(app)
@@ -24,7 +27,8 @@ year = now.year
 
 # Connect DB
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///shop.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    "DATABASE_URL", "sqlite:///shop.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 login_manager = LoginManager()
@@ -172,8 +176,8 @@ def contact():
         comment = request.form["message"]
         message = f"Subject: You recieved a message from your Tindog Website!\n\n name: {name}\nemail: {email}\ncomment: {comment}"
 
-        my_email = "aman23ks@yahoo.com"
-        my_password = "dwowjkdytlfbhbvk"
+        my_email = os.environ.get("MY_EMAIL", "aman23ks@yahoo.com")
+        my_password = os.environ.get("MY_PASSWORD", "dwowjkdytlfbhbvk")
 
         connection = smtplib.SMTP("smtp.mail.yahoo.com", port=587)
         connection.starttls()
